@@ -2,47 +2,54 @@
 # Purpose: Create a Number Guessing Game
 
 # Import the 'random' module in order to generate a random number for the game.
-import random
+from random import randint
 
 # Generate a number between 1 and 100 (inclusive).
-x = random.randint(1,100)
+RandomNumber = randint(1,100)
+print(RandomNumber)
 
 # Create a variable, count, that keeps track of the number of valid guesses.
-count = 0
-print(f"Welcome to the Number Guessing Game! You may quit at anytime during the game by typing 'quit' into the prompt.")
-input("press [ENTER] to begin")
+Count = 0
+print()
+print(f"Welcome to the Number Guessing Game!\n")
+print(f"Instructions:")
+print(f"\t* Guess an integer between 1 and 100.")
+print(f"\t* Guess again if your guess is too high or too low.")
+print(f"\t* You may quit at anytime by typing 'quit'.")
+print(f"\t* Good Luck!")
 print()
 
 # Include an option to quit instead of taking another guess.
-while True:
-    guess = input("Guess an integer between 1 and 100: ")
-    if guess == "quit":
+try:
+    if input("Press [ENTER] to continue.") == "quit":
         print(f"Thank you for playing!")
-        break
+    else:
+        while True:
+            print()
+            Name = input(f"First, please tell me what your name is:")
+            print(f"\nWelcome {Name}!")
+            Guess = input(f"Please guess an integer between 1 and 100:")
+            GuessInt = int(Guess)
+            Count += 1
+            if GuessInt > 100 or GuessInt < 1:
+                print(f"ERROR: You may only choose an integer between 1 and 100.")
+                print()
+            elif RandomNumber < GuessInt <= 100:
+                print(f"Your guess of {GuessInt} is too high. Try again!")
+                print()
+            elif 0 < GuessInt < RandomNumber:
+                print(f"Your guess of {GuessInt} is too low. Try again!")
+                print()
+            elif GuessInt == RandomNumber:
+                if Count == 1:
+                    print(f"Congratulations!! You correctly guessed the number {RandomNumber} in {Count} try!")
+                    break
+                else:
+                    print(f"Congratulations!! You correctly guessed the number {RandomNumber} in {Count} tries!")
+                    break
+            continue
+except EOFError as e:
+    print(f"Looks like you wanted to get out of the game early! Bye!")
 
-# Use try and except to differentiate between integer and string values of "guess."
-# Create a loop that continues until the user has the correct guess.
-    try:
-        guess_int = int(guess)
-        count += 1
-
-        if guess_int > 100 or guess_int < 1:
-            print(f"ERROR: You may only choose an integer between 1 and 100.")
-            print()
-        elif x < guess_int <= 100:
-            print(f"Your guess of {guess_int} is too high. Try again!")
-            print()
-        elif 0 < guess_int < x:
-            print(f"Your guess of {guess_int} is too low. Try again!")
-            print()
-        elif guess_int == x:
-            if count == 1:
-                print(f"Congratulations!! You correctly guessed the number {x} in {count} try!")
-                break
-            else:
-                print(f"Congratulations!! You correctly guessed the number {x} in {count} tries!")
-                break
-    except:
-        print(f"ERROR: Invalid input. Please choose an integer between 1 and 100!")
-        print()
-        continue
+except Exception as e:
+    print(f"An error has occured and your game is ending.\nThank you for playing!")
